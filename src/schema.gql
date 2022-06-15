@@ -1,0 +1,31 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+type User {
+  """ID of the user"""
+  _id: ID!
+  name: String!
+  username: String!
+  password: String!
+  createdAt: Date!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type Query {
+  users: [User!]!
+}
+
+type Mutation {
+  createUser(userData: UserInput!): User!
+}
+
+input UserInput {
+  name: String
+  username: String!
+  password: String!
+}
