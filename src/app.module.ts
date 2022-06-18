@@ -8,8 +8,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { join } from 'path'
 
-import { UsersModule } from './users/users.module';
+import { UserModule } from './user/user.module';
 import { DateScalar } from './common/scalars/date.scalar';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { DateScalar } from './common/scalars/date.scalar';
       }),
       inject: [ConfigService]
     }),
-    UsersModule,
+    UserModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -35,6 +36,7 @@ import { DateScalar } from './common/scalars/date.scalar';
         ]
       }
     }),
+    AuthModule,
   ],
   providers: [DateScalar]
 })

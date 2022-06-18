@@ -16,16 +16,29 @@ type User {
 """Date custom scalar type"""
 scalar Date
 
+type LoginResponse {
+  token: String!
+  user: User!
+}
+
 type Query {
-  users: [User!]!
+  getUsers: [User!]!
+  getUserByUsername(username: String!): User!
 }
 
 type Mutation {
-  createUser(userData: UserInput!): User!
+  createUser(userInput: UserInput!): User!
+  login(loginInput: LoginInput!): LoginResponse!
+  signup(userInput: UserInput!): User!
 }
 
 input UserInput {
   name: String
+  username: String!
+  password: String!
+}
+
+input LoginInput {
   username: String!
   password: String!
 }
