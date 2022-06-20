@@ -14,7 +14,7 @@ export class UserService {
         return await this.userModel.find().lean()
     }
 
-    async findByUsername(username: string): Promise<User | undefined>{
+    async findByUsername(username: string): Promise<User>{
         return await this.userModel.findOne({username}).lean()
     }
 

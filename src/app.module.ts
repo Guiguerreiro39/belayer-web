@@ -1,9 +1,9 @@
 import { config } from './config';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { DirectiveLocation, GraphQLDirective } from 'graphql';
+import { DirectiveLocation, GraphQLDirective, GraphQLError, GraphQLFormattedError } from 'graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { join } from 'path'
@@ -11,6 +11,7 @@ import { join } from 'path'
 import { UserModule } from './user/user.module';
 import { DateScalar } from './common/scalars/date.scalar';
 import { AuthModule } from './auth/auth.module';
+import { LoggerMiddleware } from './common/middleware/logger.middleware';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AuthModule } from './auth/auth.module';
       inject: [ConfigService]
     }),
     UserModule,
+    AuthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -34,10 +36,21 @@ import { AuthModule } from './auth/auth.module';
             locations: [DirectiveLocation.FIELD_DEFINITION]
           })
         ]
-      }
+      },
+      // formatError: (error: GraphQLError) => {
+      //   if (error.extensions.exception.status === 404) throw new NotFoundException();
+      //   const graphQLFormattedError: GraphQLFormattedError = {
+      //     message:  error?.message,
+      //   };
+      //   return graphQLFormattedError;
+      // },
     }),
-    AuthModule,
   ],
   providers: [DateScalar]
 })
-export class AppModule {}
+
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}

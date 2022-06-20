@@ -10,19 +10,19 @@ export class User {
     @Field(type => ID, {description: "ID of the user", nullable: false})
     _id: string;
 
-    @Prop({ required: true})
+    @Prop({ required: [true, "The field 'name' is required"]})
     @Field()
     name: string
 
-    @Prop({ required: true, unique: true})
+    @Prop({ required: [true, "The field 'username' is required"], unique: true})
     @Field()
     username: string
 
-    @Prop({ required: true})
+    @Prop({ required: [true, "The field 'password' is required"]})
     @Field()
     password: string
 
-    @Prop({ required: true, default: new Date()})
+    @Prop({default: new Date()})
     @Field()
     createdAt: Date
 }

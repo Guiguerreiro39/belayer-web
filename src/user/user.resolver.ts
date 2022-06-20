@@ -21,10 +21,4 @@ export class UserResolver {
     getUserByUsername(@Args("username") username: string): Promise<User> {
         return this.userService.findByUsername(username)
     }
-
-    @Mutation(() => User, { name: "createUser"})
-    async create(@Args('userInput') userInput: UserInput): Promise<User> {
-        const user = await this.userService.create(userInput)
-        return user
-    }
 }

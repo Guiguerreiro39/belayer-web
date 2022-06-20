@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  backend:
+    restart: unless-stopped
+    container_name: belayer-backend
+    env_file:
+      - development.env
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - ${PORT}:${PORT}
+    networks:
+      - belayer
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest 
+    container_name: belayer-database
+    restart: always
+    environment:
+      - "MONGO_INITDB_DATABASE:belayer"
+    ports:
+      - $MONGODB_PORT:27017
+    networks:
+      - belayer
+    volumes:
+      - "db:/data/db"
+
+volumes:
+  db:
+    driver: local
+
+networks:
+  belayer:
+    driver: bridge

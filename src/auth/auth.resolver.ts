@@ -1,5 +1,5 @@
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
-import { UseGuards } from '@nestjs/common';
+import { Logger, UseGuards } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 import { LoginResponse } from './dto/login.response';
@@ -10,6 +10,8 @@ import { User } from 'src/user/models/user.model';
 
 @Resolver()
 export class AuthResolver {
+    private logger = new Logger(AuthResolver.name);
+
     constructor(private authService: AuthService) {}
 
     @Mutation(() => LoginResponse)
@@ -20,6 +22,7 @@ export class AuthResolver {
 
     @Mutation(() => User)
     signup(@Args('userInput') userInput: UserInput): Promise<User> {
+        this.logger.verbose(`Creating user '${userInput.username}...`)
         return this.authService.signup(userInput)
     }
 }
