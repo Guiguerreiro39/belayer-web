@@ -38,6 +38,5 @@ lerna-debug.log*
 development.env
 production.env
 
-development.env
-development.env
+# GraphQL
 src/schema.gql
