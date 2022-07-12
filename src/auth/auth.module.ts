@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 
+import { PrismaService } from 'src/prisma.service';
 import { UserModule } from 'src/user/user.module';
 import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
@@ -22,6 +23,6 @@ import { JwtStrategy } from './jwt.strategy';
       inject: [ConfigService]
     })
   ],
-  providers: [AuthResolver, AuthService, LocalStrategy, JwtStrategy]
+  providers: [AuthResolver, AuthService, LocalStrategy, JwtStrategy, PrismaService]
 })
 export class AuthModule {}

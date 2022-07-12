@@ -1,16 +1,23 @@
 FROM node:16.15 AS development
 
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
+
 WORKDIR /app
 
 ARG PORT
 
 COPY package*.json ./
 
+COPY prisma ./prisma
+
+COPY . .
+
 RUN npm install --location=global @nestjs/cli
 
 RUN npm install
 
-COPY . .
+RUN npx prisma generate
 
 EXPOSE 8000
 

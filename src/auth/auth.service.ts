@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { comparePassword } from 'src/common/crypt/hash.crypt';
 import { LoginResponse } from './dto/login.response';
 import { UserInput } from 'src/user/dto/user.input';
-import { User } from 'src/user/models/user.model';
+import { User } from '@prisma/client';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
@@ -16,9 +16,9 @@ export class AuthService {
         private jwtService: JwtService
     ) {}
 
-    async validateUser(username: string, password: string): Promise<User | undefined> {
+    async validateUser(email: string, password: string): Promise<User | undefined> {
         try {
-            const user = await this.userService.findByUsername(username)
+            const user = await this.userService.findByEmail(email)
 
             if (!user) throw new NotFoundException(`User does not exist.`)
     
@@ -27,16 +27,16 @@ export class AuthService {
                 return res as User
             }
 
-            this.logger.error(`Wrong password input for the user '${username}'.`)
+            this.logger.error(`Wrong password input for the user '${email}'.`)
             return undefined
         } catch(error) {
-            this.logger.error(`Failed to validate the user '${username}'.`, error.stack)
+            this.logger.error(`Failed to validate the user '${email}'.`, error.stack)
         }
     }
 
     async login(user: User): Promise<LoginResponse> {
         return {
-            token: this.jwtService.sign({ username: user.username, sub: user._id}),
+            token: this.jwtService.sign({email: user.email, sub: user.id}),
             user
         }
     }

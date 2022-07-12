@@ -35,8 +35,7 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # Environment variables
-development.env
-production.env
+.env
 
 # GraphQL
 src/schema.gql

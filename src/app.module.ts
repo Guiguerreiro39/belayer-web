@@ -1,14 +1,14 @@
 import { config } from './config';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { DirectiveLocation, GraphQLDirective, GraphQLError, GraphQLFormattedError } from 'graphql';
-import { MongooseModule } from '@nestjs/mongoose';
 
 import { join } from 'path'
 
 import { UserModule } from './user/user.module';
+import { LocationModule } from './location/location.module';
 import { DateScalar } from './common/scalars/date.scalar';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
@@ -16,14 +16,8 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 @Module({
   imports: [
     ConfigModule.forRoot({envFilePath: `${process.env.NODE_ENV}.env`, isGlobal: true, load: [config]}),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('DATABASE.URI')
-      }),
-      inject: [ConfigService]
-    }),
     UserModule,
+    LocationModule,
     AuthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

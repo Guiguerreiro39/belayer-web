@@ -1,24 +1,24 @@
 import { UseGuards } from "@nestjs/common"
-import { Query, Resolver, Mutation, Args} from "@nestjs/graphql"
+import { Query, Resolver, Args} from "@nestjs/graphql"
+import { User } from "@prisma/client"
 
 import { JwtGuard } from "src/auth/jwt.guard"
-import { UserInput } from "./dto/user.input"
-import { User } from "./models/user.model"
 import { UserService } from "./user.service"
+import { UserResponse } from './dto/user.response';
 
-@Resolver(() => User)
+@Resolver(() => UserResponse)
 export class UserResolver {
     constructor(private readonly userService: UserService) {}
 
-    @Query(() => [User], { name: "getUsers"})
+    @Query(() => [UserResponse], { name: "getAllUsers" })
     @UseGuards(JwtGuard)
     getAll(): Promise<User[]> {
         return this.userService.findAll()
     }
 
-    @Query(() => User)
+    @Query(() => UserResponse, { name: "getUserByEmail" })
     @UseGuards(JwtGuard)
-    getUserByUsername(@Args("username") username: string): Promise<User> {
-        return this.userService.findByUsername(username)
+    get(@Args("email") email: string): Promise<User> {
+        return this.userService.findByEmail(email)
     }
 }

@@ -1,25 +1,31 @@
 import { Injectable } from "@nestjs/common"
-import { InjectModel } from "@nestjs/mongoose"
-import { Model } from "mongoose"
+
+import { PrismaService } from 'src/prisma.service';
+import { User } from '@prisma/client';
 
 import { hashPassword } from "src/common/crypt/hash.crypt"
 import { UserInput } from "./dto/user.input"
-import { User, UserDocument } from "./models/user.model"
 
 @Injectable()
 export class UserService {
-    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+    constructor(private prisma: PrismaService) {}
 
     async findAll(): Promise<User[]> {
-        return await this.userModel.find().lean()
+        return await this.prisma.user.findMany()
     }
 
-    async findByUsername(username: string): Promise<User>{
-        return await this.userModel.findOne({username}).lean()
+    async findByEmail(email: string): Promise<User>{
+        return await this.prisma.user.findUnique({
+            where: {
+                email
+            }
+        })
     }
 
     async create(userInput: UserInput): Promise<User> {
         const hash = await hashPassword(userInput.password)
-        return await this.userModel.create({...userInput, password: hash})
+        return await this.prisma.user.create({
+            data: {...userInput, password: hash}
+        })
     }
 }
