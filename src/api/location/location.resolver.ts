@@ -3,7 +3,7 @@ import { Query, Resolver, Mutation, Args} from "@nestjs/graphql"
 
 import { Location } from '@prisma/client';
 
-import { JwtGuard } from "src/auth/jwt.guard"
+import { JwtGuard } from "src/api/auth/jwt.guard"
 import { LocationInput } from "./dto/location.input";
 import { LocationResponse } from "./dto/location.response";
 import { LocationService } from "./location.service"
@@ -26,7 +26,7 @@ export class LocationResolver {
 
     @Mutation(() => LocationResponse, { name: "createLocation" })
     @UseGuards(JwtGuard)
-    create(@Args("locationInput") LocationInput: LocationInput): Promise<Location> {
-        return this.locationService.create(LocationInput)
+    create(@Args("locationInput") locationInput: LocationInput): Promise<Location> {
+        return this.locationService.create(locationInput)
     }
 }

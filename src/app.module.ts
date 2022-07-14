@@ -7,10 +7,12 @@ import { DirectiveLocation, GraphQLDirective, GraphQLError, GraphQLFormattedErro
 
 import { join } from 'path'
 
-import { UserModule } from './user/user.module';
-import { LocationModule } from './location/location.module';
+import { UserModule } from './api/user/user.module';
+import { LocationModule } from './api/location/location.module';
+import { RouteModule } from './api/route/route.module';
+import { ActivityModule } from './api/activity/activity.module';
 import { DateScalar } from './common/scalars/date.scalar';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './api/auth/auth.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 
 @Module({
@@ -18,6 +20,8 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
     ConfigModule.forRoot({envFilePath: `${process.env.NODE_ENV}.env`, isGlobal: true, load: [config]}),
     UserModule,
     LocationModule,
+    RouteModule,
+    ActivityModule,
     AuthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

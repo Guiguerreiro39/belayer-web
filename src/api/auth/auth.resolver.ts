@@ -5,9 +5,9 @@ import { User } from '@prisma/client';
 import { AuthService } from './auth.service';
 import { LoginResponse } from './dto/login.response';
 import { LoginInput } from './dto/login.input';
-import { UserInput } from 'src/user/dto/user.input';
+import { UserInput } from 'src/api/user/dto/user.input';
 import { GqlGuard } from './gql.guard';
-import { UserResponse } from 'src/user/dto/user.response';
+import { UserResponse } from 'src/api/user/dto/user.response';
 
 @Resolver()
 export class AuthResolver {

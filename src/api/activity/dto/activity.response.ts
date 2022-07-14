@@ -1,18 +1,18 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
-export class LocationResponse {
+export class ActivityResponse {
     @Field()
-    id: String
+    id: string
 
     @Field()
-    address: String
+    title: string
 
     @Field()
-    country: String
+    locationId: string
 
-    @Field()
-    difficulty: string
+    @Field(() => [String])
+    userIds: string[]
 
     @Field(() => Date)
     createdAt: Date

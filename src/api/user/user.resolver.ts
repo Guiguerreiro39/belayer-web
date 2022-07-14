@@ -2,7 +2,7 @@ import { UseGuards } from "@nestjs/common"
 import { Query, Resolver, Args} from "@nestjs/graphql"
 import { User } from "@prisma/client"
 
-import { JwtGuard } from "src/auth/jwt.guard"
+import { JwtGuard } from "src/api/auth/jwt.guard"
 import { UserService } from "./user.service"
 import { UserResponse } from './dto/user.response';
 

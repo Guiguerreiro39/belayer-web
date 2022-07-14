@@ -3,9 +3,9 @@ import { JwtService } from '@nestjs/jwt';
 
 import { comparePassword } from 'src/common/crypt/hash.crypt';
 import { LoginResponse } from './dto/login.response';
-import { UserInput } from 'src/user/dto/user.input';
+import { UserInput } from 'src/api/user/dto/user.input';
 import { User } from '@prisma/client';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/api/user/user.service';
 
 @Injectable()
 export class AuthService {
