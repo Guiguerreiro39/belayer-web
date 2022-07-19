@@ -5,13 +5,30 @@ services:
     restart: unless-stopped
     container_name: belayer-backend
     env_file:
-      - .env
+      - ./backend/.env
     build:
-      context: ./
+      context: ./backend
       dockerfile: Dockerfile
       target: development
     volumes:
-      - ./:/app
+      - ./backend:/app
       - /app/node_modules
     ports:
-      - ${PORT}:${PORT}
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+  frontend:
+    restart: unless-stopped
+    container_name: belayer-frontend
+    env_file:
+      - ./frontend/.env
+    build:
+      context: "./frontend"
+      dockerfile: Dockerfile
+      target: development
+    environment:
+      APP_ENV: ${NODE_ENV}
+    volumes:
+      - "./frontend/:/app/"
+    ports:
+      - "${FRONTEND_PORT}:3000"
+    depends_on:
+      - backend

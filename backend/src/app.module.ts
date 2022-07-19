@@ -17,7 +17,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({envFilePath: `${process.env.NODE_ENV}.env`, isGlobal: true, load: [config]}),
+    ConfigModule.forRoot({envFilePath: `.env`, isGlobal: true, load: [config]}),
     UserModule,
     LocationModule,
     RouteModule,
