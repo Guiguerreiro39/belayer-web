@@ -1,4 +1,6 @@
 node_modules
-Dockerfile
 sample.env
 .gitignore
+Dockerfile
+README.md
+.next
