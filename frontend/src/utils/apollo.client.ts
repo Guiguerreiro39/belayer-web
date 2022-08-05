@@ -18,10 +18,16 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`)
 })
 
-const httpLink = new HttpLink({
-  uri: 'http://localhost:8000/graphql', // Server URL (must be absolute)
-  credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
-})
+const httpOptions = () => {
+  let options : {[key: string] : any} = {}
+
+  options.uri = process.env.NEXT_PUBLIC_SERVER_URL
+  options.credentials = 'include'
+
+  return options
+}
+
+const httpLink = new HttpLink(httpOptions())
 
 function createApolloClient() {
   return new ApolloClient({

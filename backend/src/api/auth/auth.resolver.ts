@@ -1,4 +1,4 @@
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { Logger, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 
@@ -8,22 +8,34 @@ import { LoginInput } from './dto/login.input';
 import { UserInput } from 'src/api/user/dto/user.input';
 import { GqlGuard } from './gql.guard';
 import { UserResponse } from 'src/api/user/dto/user.response';
+import { JwtGuard } from './jwt.guard';
 
 @Resolver()
 export class AuthResolver {
-    private logger = new Logger(AuthResolver.name);
+  private logger = new Logger(AuthResolver.name);
 
-    constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-    @Mutation(() => LoginResponse)
-    @UseGuards(GqlGuard)
-    login(@Args('loginInput') _: LoginInput, @Context() context: any): Promise<LoginResponse> {
-        return this.authService.login(context.user)
-    }
+  @Mutation(() => UserResponse)
+  @UseGuards(GqlGuard)
+  async login(
+    @Args('loginInput') _: LoginInput,
+    @Context() context: any,
+  ): Promise<UserResponse> {
+    const { user, token } = await this.authService.login(context.user);
+    context.res.cookie('auth-token', token, { httpOnly: true})
+    return user
+  }
 
-    @Mutation(() => UserResponse)
-    signup(@Args('userInput') userInput: UserInput): Promise<User> {
-        this.logger.verbose(`Creating user '${userInput.email}...`)
-        return this.authService.signup(userInput)
-    }
+  @Mutation(() => UserResponse)
+  signup(@Args('userInput') userInput: UserInput): Promise<User> {
+    this.logger.verbose(`Creating user '${userInput.email}...`);
+    return this.authService.signup(userInput);
+  }
+
+  @Query(() => UserResponse, { name: 'getMe' })
+  @UseGuards(JwtGuard)
+  getMe(@Context() context: any): Promise<User> {
+    return this.authService.me(context.req.cookies['auth-token'] ?? undefined);
+  }
 }

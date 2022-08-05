@@ -1,13 +1,12 @@
-FROM node:16.15 AS development
+FROM node:18-alpine AS development
 
 # Create app directory
 WORKDIR /app
 
-# Installing dependencies
+# Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN npm install
 
-# Copying source files
 COPY . .
 
 # Building app

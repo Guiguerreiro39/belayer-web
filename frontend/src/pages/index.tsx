@@ -6,12 +6,9 @@ import { useStore } from "@/utils/store";
 const LOGIN = gql`
   mutation login($input: LoginInput!) {
     login(loginInput: $input) {
-      token
-      user {
-        email
-        firstName
-        level
-      }
+      email
+      firstName
+      level
     }
   }
 `;
@@ -21,15 +18,15 @@ const Home: NextPage = () => {
   const store = useStore();
 
   // Graphql
-  const [loginMutation, { data, error }] = useMutation(LOGIN);
+  const [loginMutation, { data }] = useMutation(LOGIN);
 
   // React state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Save on store when login is made
+  // Save token and user on store when login is made
   useEffect(() => {
-    if (data) store.login(data.login.token, data.login.user);
+    if (data) store.login(data.login);
   }, [data]);
 
   const login = () => {
@@ -40,17 +37,13 @@ const Home: NextPage = () => {
           password,
         },
       },
+      errorPolicy: 'all'
     });
   };
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      login();
-    }
-    catch() {
-      store.notifyError(error);
-    }
+    login();
   };
 
   return (
@@ -70,8 +63,8 @@ const Home: NextPage = () => {
           Login
         </button>
       </form>
+      <p>{process.env.GRAPHQL_SERVER_URL}</p>
       {store.user && <p>Hello {store.user.firstName}</p>}
-      {store.error && <p>{store.error.message}</p>}
     </>
   );
 };

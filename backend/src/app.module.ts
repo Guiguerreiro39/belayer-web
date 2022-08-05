@@ -27,6 +27,11 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       installSubscriptionHandlers: true,
+      cors: {
+        origin: config().FRONTEND_URL,
+        credentials: true,
+      },
+      context: ({ req, res }) => ({ req, res }),
       buildSchemaOptions: {
         directives: [
           new GraphQLDirective({

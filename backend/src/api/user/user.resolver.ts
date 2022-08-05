@@ -6,7 +6,7 @@ import { JwtGuard } from "src/api/auth/jwt.guard"
 import { UserService } from "./user.service"
 import { UserResponse } from './dto/user.response';
 
-@Resolver(() => UserResponse)
+@Resolver()
 export class UserResolver {
     constructor(private readonly userService: UserService) {}
 

@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { comparePassword } from 'src/common/crypt/hash.crypt';
@@ -43,5 +43,10 @@ export class AuthService {
 
     async signup(userInput: UserInput): Promise<User> {
         return this.userService.create(userInput)
+    }
+
+    async me(token: string | undefined): Promise<User> {
+        const payload = this.jwtService.decode(token)
+        return this.userService.findByEmail(payload["email"])
     }
 }
