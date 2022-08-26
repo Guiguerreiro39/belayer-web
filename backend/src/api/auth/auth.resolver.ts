@@ -3,7 +3,6 @@ import { Logger, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 
 import { AuthService } from './auth.service';
-import { LoginResponse } from './dto/login.response';
 import { LoginInput } from './dto/login.input';
 import { UserInput } from 'src/api/user/dto/user.input';
 import { GqlGuard } from './gql.guard';
@@ -28,12 +27,20 @@ export class AuthResolver {
   }
 
   @Mutation(() => UserResponse)
+  @UseGuards(JwtGuard)
+  logout(@Context() context: any) : Promise<User> {
+    const token = context.req.cookies['auth-token']
+    context.res.clearCookie('auth-token', { httpOnly: true })
+    return this.authService.me(token)
+  }
+
+  @Mutation(() => UserResponse)
   signup(@Args('userInput') userInput: UserInput): Promise<User> {
     this.logger.verbose(`Creating user '${userInput.email}...`);
     return this.authService.signup(userInput);
   }
 
-  @Query(() => UserResponse, { name: 'getMe' })
+  @Query(() => UserResponse)
   @UseGuards(JwtGuard)
   getMe(@Context() context: any): Promise<User> {
     return this.authService.me(context.req.cookies['auth-token'] ?? undefined);

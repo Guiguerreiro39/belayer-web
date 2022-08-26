@@ -1,49 +1,25 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState, useContext } from "react";
+import { AuthContext } from "@/context/auth";
 import type { NextPage } from "next";
-import { gql, useMutation } from "@apollo/client";
-import { useStore } from "@/utils/store";
-
-const LOGIN = gql`
-  mutation login($input: LoginInput!) {
-    login(loginInput: $input) {
-      email
-      firstName
-      level
-    }
-  }
-`;
+import { useAuthStore } from "@/services/store/auth";
 
 const Home: NextPage = () => {
   // Store
-  const store = useStore();
+  const store = useAuthStore();
 
-  // Graphql
-  const [loginMutation, { data }] = useMutation(LOGIN);
+  // Context
+  const { isAuthenticated } = useContext(AuthContext)
 
   // React state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Save token and user on store when login is made
-  useEffect(() => {
-    if (data) store.login(data.login);
-  }, [data]);
-
-  const login = () => {
-    loginMutation({
-      variables: {
-        input: {
-          email,
-          password,
-        },
-      },
-      errorPolicy: 'all'
-    });
-  };
-
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    login();
+    if (store.user) {
+      store.logout()
+    }
+    else store.login(email, password);
   };
 
   return (
@@ -60,11 +36,10 @@ const Home: NextPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit" className="bg-red-500">
-          Login
+          {store.user ? 'Logout' : 'Login'}
         </button>
       </form>
-      <p>{process.env.GRAPHQL_SERVER_URL}</p>
-      {store.user && <p>Hello {store.user.firstName}</p>}
+      {isAuthenticated && <p>Hello {store.user?.firstName}</p>}
     </>
   );
 };
