@@ -1,7 +1,7 @@
 import { initializeApollo } from '@/services/apollo/client';
-import { User } from '@/types';
-import { GET_ME } from '@/gql/queries/user';
 import { LOGIN, LOGOUT } from '@/gql/mutations/auth';
+import { GET_ME } from '@/gql/queries/user';
+import { User } from '@/types';
 
 const apolloClient = initializeApollo()
 

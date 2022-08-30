@@ -7,7 +7,7 @@ type Store = {
   user: User | undefined;
   login: (email: string, password: string) => void;
   logout: () => void;
-  authInit: () => void;
+  authInit: () => Promise<User | undefined>;
 };
 
 export const useAuthStore = create<Store>((set) => ({
@@ -32,5 +32,7 @@ export const useAuthStore = create<Store>((set) => ({
       ...state,
       user
     }))
+
+    return user
   },
 }));
