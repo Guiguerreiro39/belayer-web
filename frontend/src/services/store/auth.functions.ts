@@ -30,8 +30,10 @@ export const login = async (email: string, password: string) => {
 };
 
 export const logout = async () => {
-  await apolloClient.mutate({
+  const { data } = await apolloClient.mutate({
     mutation: LOGOUT,
     errorPolicy: 'all'
   });
+
+  return data?.logout ?? undefined
 }

@@ -12,7 +12,7 @@ type AuthContextPropsType = {
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({ children }: AuthContextPropsType) {
-  const store = useAuthStore((state) => ({ user: state.user, authInit: state.authInit }));
+  const store = useAuthStore((state) => ({ user: state.user }));
 
   // Check if the user is authenticated
   const isAuthenticated = !!store.user

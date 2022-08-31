@@ -1,14 +1,12 @@
 import { FormEvent, useState } from "react";
-import { useIsAuthenticated } from "@/context/auth";
 import type { NextPage } from "next";
 import { useAuthStore } from "@/services/store/auth";
+import { useRouter } from "next/router";
+import { withoutAuth } from "@/HOCs/auth";
 
 const Login: NextPage = () => {
-  // Store
   const store = useAuthStore();
-
-  // Context
-  const isAuthenticated = useIsAuthenticated()
+  const router = useRouter();
 
   // React state
   const [email, setEmail] = useState("");
@@ -17,32 +15,35 @@ const Login: NextPage = () => {
   const submit = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (store.user) {
-      store.logout()
-    }
-    else store.login(email, password);
+    const res = await store.login(email, password);
+    if (res) router.push("/");
   };
 
   return (
     <>
-      <form onSubmit={submit}>
+      <form onSubmit={submit} className="h-full w-1/2 m-auto flex flex-col items-center justify-center space-y-5">
         <input
-          type="text"
-          className="border w-40 h-10"
+          placeholder="Your email address"
+          type="email"
+          name="email"
+          autoComplete="email"
+          className="input w-full"
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
+          placeholder="Your account password"
           type="password"
-          className="border w-40 h-10"
+          name="password"
+          autoComplete="password"
+          className="input w-full"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit" className="bg-red-500">
-          {store.user ? 'Logout' : 'Login'}
+        <button type="submit" className="btn-lg">
+          Login
         </button>
       </form>
-      {isAuthenticated && <p>Hello {store.user?.firstName}</p>}
     </>
   );
 };
 
-export default Login;
+export default withoutAuth(Login);

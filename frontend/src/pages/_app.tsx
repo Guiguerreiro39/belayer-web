@@ -1,9 +1,9 @@
 import type { AppProps } from "next/app";
-import "@/assets/styles/global.css";
+import "@/assets/styles/global.scss";
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "@/services/apollo/client";
 import { AuthProvider } from "@/context/auth";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthStore } from "@/services/store/auth";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -16,13 +16,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   // Check if the initial fetch was made
   const [mount, setMount] = useState<boolean>(false)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     async function init() {
       await store.authInit();
       setMount(true)
     }
 
-    init();
+    init()
   }, []);
 
   if (!mount) return <p>Loading...</p>

@@ -2,7 +2,5 @@ sample.env
 .gitignore
 Dockerfile
 README.md
-node_modules
-.next
 .eslintrc.json
 

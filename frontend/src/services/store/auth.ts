@@ -5,26 +5,30 @@ import * as auth from './auth.functions'
 // Zustand implementation
 type Store = {
   user: User | undefined;
-  login: (email: string, password: string) => void;
-  logout: () => void;
-  authInit: () => Promise<User | undefined>;
+  login: (email: string, password: string) => Promise<boolean>;
+  logout: () => Promise<boolean>;
+  authInit: () => Promise<boolean>;
 };
 
 export const useAuthStore = create<Store>((set) => ({
   user: undefined,
-  login: async (email: string, password: string) => {
+  login: async (email: string, password: string): Promise<boolean> => {
     const user = await auth.login(email, password)
     set((state) => ({
       ...state,
       user,
     }));
+
+    return !!user
   },
   logout: async () => {
-    await auth.logout()
+    const user = await auth.logout()
     set((state) => ({
       ...state,
       user: undefined
     }))
+
+    return !!user
   },
   authInit: async () => {
     const user = await auth.checkAuth()
@@ -33,6 +37,6 @@ export const useAuthStore = create<Store>((set) => ({
       user
     }))
 
-    return user
+    return !!user
   },
 }));
