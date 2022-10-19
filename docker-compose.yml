@@ -1,17 +1,17 @@
-version: '3'
+version: "3"
 
 services:
   backend:
     restart: unless-stopped
     container_name: belayer-backend
     env_file:
-      - ./backend/.env
+      - ./apps/backend/.env
     build:
-      context: ./backend
+      context: ./apps/backend
       dockerfile: Dockerfile
       target: development
     volumes:
-      - ./backend:/app
+      - ./apps/backend:/app
       - /app/node_modules
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
@@ -21,15 +21,15 @@ services:
     restart: unless-stopped
     container_name: belayer-frontend
     env_file:
-      - ./frontend/.env
+      - ./apps/frontend/.env
     build:
-      context: "./frontend"
+      context: "./apps/frontend"
       dockerfile: Dockerfile
       target: development
     environment:
       APP_ENV: ${NODE_ENV}
     volumes:
-      - "./frontend:/app"
+      - "./apps/frontend:/app"
       - "/app/node_modules"
       - "/app/.next"
     ports:
@@ -41,4 +41,4 @@ services:
 
 networks:
   belayer_network:
-    external: true
+    external: false

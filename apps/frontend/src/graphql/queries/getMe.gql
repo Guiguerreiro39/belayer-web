@@ -1,0 +1,9 @@
+query getMe {
+  user: getMe {
+    id
+    email
+    firstName
+    lastName
+    level
+  }
+}

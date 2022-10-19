@@ -1,4 +1,9 @@
 {
+  "eslint.format.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.rulers": [{ "column": 120 }],
   "files.associations": {
     "*.ejs": "html",
     ".env": "dotenv",
