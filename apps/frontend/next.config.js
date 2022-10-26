@@ -5,6 +5,13 @@ const nextConfig = withTM({
   reactStrictMode: true,
   swcMinify: true,
   output: 'standalone',
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    })
+    return config
+  },
   webpackDevMiddleware: (config) => {
     config.watchOptions = {
       poll: 1000,

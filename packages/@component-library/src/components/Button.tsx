@@ -17,7 +17,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
 
   return (
     <button
-      className={`bg-red-600 ${className} ${props.className ?? ''}`}
+      className={`bg-highlight ${className} ${props.className ?? ''}`}
       {...props}
     >
       {children}

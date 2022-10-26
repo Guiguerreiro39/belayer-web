@@ -4,7 +4,6 @@ import '@/assets/styles/global.scss'
 import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '@/services/apollo/client'
 import { AuthProvider } from '@/context/auth'
-import { ThemeProvider } from '@material-tailwind/react'
 import { useAuthStore } from '@/services/store/auth'
 import { useGetMeQuery } from '@/graphql/schema'
 
@@ -24,9 +23,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <ApolloProvider client={apolloClient}>
       <AuthProvider>
-        <ThemeProvider>
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <Component {...pageProps} />
       </AuthProvider>
     </ApolloProvider>
   )

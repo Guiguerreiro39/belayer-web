@@ -1,10 +1,10 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import { Button, ButtonProps } from '../src';
+import { Input, InputProps } from '../src';
 
 const meta: Meta = {
-  title: 'Button',
-  component: Button,
+  title: 'Input',
+  component: Input,
   argTypes: {
     onClick: { action: 'clicked' },
   },
@@ -15,9 +15,9 @@ const meta: Meta = {
 
 export default meta;
 
-const Template: Story<ButtonProps> = (args) => (
-  <Button {...args}>Hello World!</Button>
-);
+const Template: Story<InputProps> = (args) => <Input {...args} />;
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  placeholder: 'Hello...',
+};
