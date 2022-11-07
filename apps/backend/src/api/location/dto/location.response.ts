@@ -1,23 +1,31 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { Difficulty } from "@prisma/client";
 
 @ObjectType()
 export class LocationResponse {
-    @Field()
-    id: string
+  @Field()
+  id: string;
 
-    @Field()
-    address: string
+  @Field()
+  name: string;
 
-    @Field()
-    country: string
+  @Field()
+  address: string;
 
-    @Field()
-    difficulty: Difficulty
+  @Field()
+  city: string;
 
-    @Field(() => Date)
-    createdAt: Date
+  @Field()
+  country: string;
 
-    @Field(() => Date)
-    updatedAt: Date
+  @Field()
+  thumbnail: string;
+
+  @Field()
+  difficulty: number;
+
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Field(() => Date)
+  updatedAt: Date;
 }

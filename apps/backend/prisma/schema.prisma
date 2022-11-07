@@ -25,9 +25,12 @@ model User {
 
 model Location {
   id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
   address    String
   country    String
-  difficulty Difficulty @default(EASY)
+  city       String
+  thumbnail  String
+  difficulty Float @default(0)
   activities Activity[]
   routes     Route[]
   createdAt  DateTime   @default(now())
@@ -53,13 +56,6 @@ model Activity {
   userIds    String[]  @db.ObjectId
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-}
-
-enum Difficulty {
-  EASY
-  MEDIUM
-  HARD
-  EXPERT
 }
 
 enum ClimbType {

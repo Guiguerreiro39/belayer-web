@@ -1,9 +1,10 @@
+import { UserResponse } from '@/graphql/schema'
 import create from 'zustand'
 
 // Zustand implementation
 type Store = {
-  user: { __typename?: 'UserResponse' | undefined } | undefined
-  setUser: (user?: { __typename?: 'UserResponse' | undefined } | undefined) => void
+  user: Partial<UserResponse> | undefined
+  setUser: (user?: Partial<UserResponse> | undefined) => void
 }
 
 export const useAuthStore = create<Store>((set) => ({

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import { ClickableIcon, ClickableIconProps } from '../src';
+import { IconButton, IconButtonProps } from '../src';
 
 const meta: Meta = {
   title: 'Clickable Icon',
-  component: ClickableIcon,
+  component: IconButton,
   argTypes: {
     onClick: { action: 'clicked' },
   },
@@ -15,8 +15,8 @@ const meta: Meta = {
 
 export default meta;
 
-const Template: Story<ClickableIconProps> = (args) => (
-  <ClickableIcon {...args}>
+const Template: Story<IconButtonProps> = (args) => (
+  <IconButton {...args}>
     <svg
       height="40"
       width="40"
@@ -25,8 +25,12 @@ const Template: Story<ClickableIconProps> = (args) => (
     >
       <path d="M36 64.5C32.05 64.5 28.35 63.75 24.9 62.25C21.45 60.75 18.437 58.712 15.861 56.136C13.287 53.562 11.25 50.55 9.75 47.1C8.25 43.65 7.5 39.95 7.5 36C7.5 32.05 8.25 28.35 9.75 24.9C11.25 21.45 13.287 18.437 15.861 15.861C18.437 13.287 21.45 11.25 24.9 9.75C28.35 8.25 32.05 7.5 36 7.5C43.15 7.5 49.363 9.8 54.639 14.4C59.913 19 63.075 24.725 64.125 31.575H59.475C58.775 27.575 57.15 23.987 54.6 20.811C52.05 17.637 48.85 15.275 45 13.725V15C45 16.65 44.413 18.062 43.239 19.236C42.063 20.412 40.65 21 39 21H33V27C33 27.85 32.713 28.562 32.139 29.136C31.563 29.712 30.85 30 30 30H24V36H29.775V45H27L12.6 30.6C12.45 31.5 12.312 32.4 12.186 33.3C12.062 34.2 12 35.1 12 36C12 42.55 14.3 48.175 18.9 52.875C23.5 57.575 29.2 59.95 36 60V64.5ZM63.15 63.375L53.175 53.4C52.225 54.05 51.188 54.562 50.064 54.936C48.938 55.312 47.75 55.5 46.5 55.5C43.15 55.5 40.313 54.337 37.989 52.011C35.663 49.687 34.5 46.85 34.5 43.5C34.5 40.15 35.663 37.312 37.989 34.986C40.313 32.662 43.15 31.5 46.5 31.5C49.85 31.5 52.687 32.662 55.011 34.986C57.337 37.312 58.5 40.15 58.5 43.5C58.5 44.75 58.3 45.95 57.9 47.1C57.5 48.25 57 49.3 56.4 50.25L66.375 60.15L63.15 63.375ZM46.5 51C48.6 51 50.375 50.275 51.825 48.825C53.275 47.375 54 45.6 54 43.5C54 41.4 53.275 39.625 51.825 38.175C50.375 36.725 48.6 36 46.5 36C44.4 36 42.625 36.725 41.175 38.175C39.725 39.625 39 41.4 39 43.5C39 45.6 39.725 47.375 41.175 48.825C42.625 50.275 44.4 51 46.5 51Z" />
     </svg>
-  </ClickableIcon>
+  </IconButton>
 );
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Active = Template.bind({});
+export const Inactive = Template.bind({});
+Active.args = {};
+Inactive.args = {
+  active: false,
+};

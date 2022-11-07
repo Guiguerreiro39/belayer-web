@@ -5,6 +5,9 @@ const nextConfig = withTM({
   reactStrictMode: true,
   swcMinify: true,
   output: 'standalone',
+  images: {
+    domains: ['images.unsplash.com'],
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

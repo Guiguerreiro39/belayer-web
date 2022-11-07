@@ -34,16 +34,22 @@ export type ActivityResponse = {
 
 export type LocationInput = {
   address: Scalars['String'];
+  city: Scalars['String'];
   country: Scalars['String'];
+  name: Scalars['String'];
+  thumbnail: Scalars['String'];
 };
 
 export type LocationResponse = {
   __typename?: 'LocationResponse';
   address: Scalars['String'];
+  city: Scalars['String'];
   country: Scalars['String'];
   createdAt: Scalars['Date'];
-  difficulty: Scalars['String'];
+  difficulty: Scalars['Float'];
   id: Scalars['String'];
+  name: Scalars['String'];
+  thumbnail: Scalars['String'];
   updatedAt: Scalars['Date'];
 };
 
@@ -167,6 +173,11 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type LogoutMutation = { __typename?: 'Mutation', user: { __typename?: 'UserResponse', id: string } };
 
+export type GetAllLocationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllLocationsQuery = { __typename?: 'Query', locations: Array<{ __typename?: 'LocationResponse', id: string, name: string, address: string, country: string, city: string, thumbnail: string, difficulty: number }> };
+
 export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -242,6 +253,46 @@ export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<Logou
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const GetAllLocationsDocument = gql`
+    query getAllLocations {
+  locations: getAllLocations {
+    id
+    name
+    address
+    country
+    city
+    thumbnail
+    difficulty
+  }
+}
+    `;
+
+/**
+ * __useGetAllLocationsQuery__
+ *
+ * To run a query within a React component, call `useGetAllLocationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllLocationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllLocationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllLocationsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllLocationsQuery, GetAllLocationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllLocationsQuery, GetAllLocationsQueryVariables>(GetAllLocationsDocument, options);
+      }
+export function useGetAllLocationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllLocationsQuery, GetAllLocationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllLocationsQuery, GetAllLocationsQueryVariables>(GetAllLocationsDocument, options);
+        }
+export type GetAllLocationsQueryHookResult = ReturnType<typeof useGetAllLocationsQuery>;
+export type GetAllLocationsLazyQueryHookResult = ReturnType<typeof useGetAllLocationsLazyQuery>;
+export type GetAllLocationsQueryResult = Apollo.QueryResult<GetAllLocationsQuery, GetAllLocationsQueryVariables>;
 export const GetMeDocument = gql`
     query getMe {
   user: getMe {

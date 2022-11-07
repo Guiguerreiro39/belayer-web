@@ -4,7 +4,7 @@
   "private": true,
   "main": ".eslintrc.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"next dev\" \"npm run generate --watch\"",
     "build": "next build",
     "generate": "graphql-codegen --require dotenv/config",
     "start": "next start",

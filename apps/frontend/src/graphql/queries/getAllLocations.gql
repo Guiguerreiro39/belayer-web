@@ -1,0 +1,11 @@
+query getAllLocations {
+  locations: getAllLocations {
+    id
+    name
+    address
+    country
+    city
+    thumbnail
+    difficulty
+  }
+}

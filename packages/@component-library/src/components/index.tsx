@@ -1,3 +1,4 @@
 export * from './Button';
-export * from './ClickableIcon';
+export * from './IconButton';
 export * from './Input';
+export * from './Card';

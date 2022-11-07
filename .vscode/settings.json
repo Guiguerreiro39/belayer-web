@@ -8,5 +8,8 @@
     "*.ejs": "html",
     ".env": "dotenv",
     "ratio": "c"
-  }
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ]
 }

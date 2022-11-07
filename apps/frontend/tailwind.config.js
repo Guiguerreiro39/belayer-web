@@ -2,7 +2,7 @@
 
 module.exports = {
   mode: 'jit',
-  content: ['./src/**/*.{ts,tsx}'],
+  content: ['./src/**/*.{ts,tsx,js,jsx}'],
   theme: {
     extend: {
       colors: {
@@ -66,6 +66,9 @@ module.exports = {
           900: '#272a2e',
           DEFAULT: '#c5d0e6',
         },
+      },
+      backdropBlur: {
+        xs: '2px',
       },
     },
   },

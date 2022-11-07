@@ -21,11 +21,13 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   if (loading) return <p>Loading...</p>
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <AuthProvider>
-        <Component {...pageProps} />
-      </AuthProvider>
-    </ApolloProvider>
+    <>
+      <ApolloProvider client={apolloClient}>
+        <AuthProvider user={data?.user}>
+          <Component {...pageProps} />
+        </AuthProvider>
+      </ApolloProvider>
+    </>
   )
 }
 

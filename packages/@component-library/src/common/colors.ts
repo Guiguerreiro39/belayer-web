@@ -6,6 +6,29 @@ export const bgColor: { [key: string]: string } = {
   background: 'bg-background',
 };
 
+export const textColor: { [key: string]: string } = {
+  highlight: 'text-highlight',
+  secondary: 'text-secondary',
+  disabled: 'text-disabled',
+  transparent: 'text-transparent',
+  background: 'text-background',
+};
+
+export const borderColor: { [key: string]: string } = {
+  highlight: 'border-highlight',
+  secondary: 'border-secondary',
+  disabled: 'border-disabled',
+  transparent: 'border-transparent',
+  background: 'border-background',
+};
+export const ringColor: { [key: string]: string } = {
+  highlight: 'ring-highlight',
+  secondary: 'ring-secondary',
+  disabled: 'ring-disabled',
+  transparent: 'ring-transparent',
+  background: 'ring-background',
+};
+
 export const fillColor: { [key: string]: string } = {
   white: 'fill-white',
   stroke: 'fill-stroke',

@@ -4,6 +4,8 @@ generates:
   src/graphql/schema.ts:
     config:
       withHooks: true
+      withResultType: true
+      withMutationOptionsType: true
       withComponent: false
       withHOC: false
     plugins:
