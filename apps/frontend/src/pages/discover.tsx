@@ -1,7 +1,6 @@
 import LocationCard from '@/components/discover/locationCard'
 import { useGetAllLocationsQuery } from '@/graphql/schema'
 import { withAuth } from '@/HOCs/auth'
-import { Card } from 'component-library'
 import { NextPage } from 'next'
 
 const Discover: NextPage = () => {
@@ -11,9 +10,6 @@ const Discover: NextPage = () => {
 
   return (
     <div className='grid grid-cols-12 gap-6'>
-      <Card className='col-span-3 lg:col-span-2'>
-        <h1>Filters</h1>
-      </Card>
       <div className='col-span-6 lg:col-span-8'>
         {data && data.locations.map((location) => <LocationCard key={location.id} {...location} />)}
       </div>

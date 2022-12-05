@@ -6,7 +6,7 @@ interface SearchProps {}
 
 const Search: FC<SearchProps> = () => {
   return (
-    <div className='relative w-full ml-2 hidden lg:block'>
+    <div className='relative w-1/2 hidden lg:block'>
       <Input
         placeholder='Search for anything...'
         className='h-10 pr-14 w-full'

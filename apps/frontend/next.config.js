@@ -6,7 +6,7 @@ const nextConfig = withTM({
   swcMinify: true,
   output: 'standalone',
   images: {
-    domains: ['images.unsplash.com'],
+    domains: ['images.unsplash.com', 'res.cloudinary.com'],
   },
   webpack(config) {
     config.module.rules.push({

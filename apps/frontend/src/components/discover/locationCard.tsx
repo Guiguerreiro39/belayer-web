@@ -3,11 +3,17 @@ import { FC } from 'react'
 import Location from '@/assets/svg/location.svg'
 import Lightning from '@/assets/svg/lightning.svg'
 import { LocationResponse } from '@/graphql/schema'
+import { buildUrl } from 'cloudinary-build-url'
 
 const LocationCard: FC<Partial<LocationResponse>> = ({ name, difficulty, city, country, thumbnail }) => {
+  const url = buildUrl(`belayer/locations/${thumbnail}`, {
+    cloud: {
+      cloudName: 'guilhermegr',
+    },
+  })
   return (
-    <div className='h-72 w-72 relative overflow-hidden rounded-lg'>
-      {thumbnail && name && <Image src={thumbnail} alt={name} className='object-cover' fill />}
+    <div className='group h-72 w-72 relative overflow-hidden rounded-lg'>
+      {name && <Image src={url} alt={name} className='object-cover duration-300 group-hover:scale-110' fill />}
       <div className='absolute bottom-0 w-full h-1/3 p-4 flex flex-col justify-center backdrop-blur-xs bg-black bg-opacity-25'>
         <h4 className='text-white text-lg'>{name}</h4>
         <div className='flex items-center space-x-1'>
